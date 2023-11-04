@@ -1,6 +1,7 @@
 package persistence.sql.dml;
 
 import persistence.sql.ddl.EntityMetaData;
+import persistence.sql.ddl.Person;
 import persistence.sql.mapper.ColumnType;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class InsertQueryBuilder {
         return String.format(INSERT_QUERY_FORMAT
                 , entityMetaData.getTableName()
                 , columnsClause(entityMetaData.getFieldColumns())
-                , valueClause(entityMetaData.getFieldColumns()));
+                , valueClause(entityMetaData));
     }
 
     private String columnsClause(final List<ColumnType> columns) {
@@ -23,8 +24,9 @@ public class InsertQueryBuilder {
                 .collect(Collectors.joining(", "));
     }
 
-    private String valueClause(final List<ColumnType> columns) {
-        return columns.stream()
+    private String valueClause(final EntityMetaData entityMetaData) {
+
+        return entityMetaData.getFieldColumns().stream()
                 .map(ColumnType::getValue)
                 .collect(Collectors.joining(", "));
     }

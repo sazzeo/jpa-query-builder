@@ -20,4 +20,6 @@ public interface ColumnType {
 
     Class<?> getType();
 
+    Object getColumnValue(Object object);
+
 }

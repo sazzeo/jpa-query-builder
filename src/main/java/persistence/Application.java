@@ -31,7 +31,7 @@ public class Application {
 
             //테이블 생성
             DdlQueryBuilder ddlQueryBuilder = DdlQueryBuilder.getInstance();
-            EntityMetaData entityMetaData = new EntityMetaData(person);
+            EntityMetaData entityMetaData = new EntityMetaData(person.getClass());
             jdbcTemplate.execute(ddlQueryBuilder.createTable(entityMetaData));
 
 
