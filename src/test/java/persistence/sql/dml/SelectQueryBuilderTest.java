@@ -17,7 +17,7 @@ class SelectQueryBuilderTest {
     EntityMetaData entityMetaData ;
     @BeforeEach
     void setUp() {
-        entityMetaData = new EntityMetaData(person);
+        entityMetaData = new EntityMetaData(Person.class);
     }
 
     @Test
@@ -30,7 +30,7 @@ class SelectQueryBuilderTest {
     @Test
     @DisplayName("findById 쿼리 테스트")
     void findByIdTest() {
-        EntityMetaData entityMetaData = new EntityMetaData(person);
+        EntityMetaData entityMetaData = new EntityMetaData(Person.class);
         String findById = selectQueryBuilder.findById(entityMetaData , 2L);
         System.out.println(findById);
         assertThat(findById).isEqualTo("select * from users where id = 2");

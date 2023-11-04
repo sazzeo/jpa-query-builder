@@ -17,7 +17,7 @@ class InsertQueryBuilderTest {
         person.setAge(28);
         person.setName("지영");
         person.setEmail("jy@lim.com");
-        EntityMetaData entityMetaData = new EntityMetaData(person);
+        EntityMetaData entityMetaData = new EntityMetaData(Person.class);
 
         Assertions.assertThat(insertQueryBuilder.create(entityMetaData))
                 .isEqualTo("insert into users (old, nick_name, email) values(28, '지영', 'jy@lim.com')");

@@ -1,38 +1,39 @@
 package persistence.sql.mapper;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ColumnTypes {
     final private Map<String, ColumnType> columnTypeMap;
 
-    public ColumnTypes(final Object entity) {
-        this.columnTypeMap = generateColumns(entity);
+
+    public ColumnTypes(final Class<?> clazz) {
+        this.columnTypeMap = generateColumnMap(clazz);
     }
 
-    public ColumnTypes(final Map<String, ColumnType> columns) {
-        this.columnTypeMap = columns;
-    }
 
-    private Map<String, ColumnType> generateColumns(final Object entity) {
-        Class<?> entityClass = entity.getClass();
-        Map<String, ColumnType> columns = new HashMap<>();
-        Field[] fields = entityClass.getDeclaredFields();
-        for (Field field : fields) {
-            ColumnType columnType;
-            if (field.isAnnotationPresent(Id.class)) {
-                columnType = new ColumnId(entity, field);
-            } else {
-                columnType = new ColumnField(entity, field);
-            }
-            columns.put(columnType.getName(), columnType);
-        }
-        return columns;
+    private Map<String, ColumnType> generateColumnMap(final Class<?> clazz) {
+        Map<String, ColumnType> columnMap = new HashMap<>();
+        Field[] fields = clazz.getDeclaredFields();
+
+        Arrays.stream(fields)
+                .filter(field -> !field.isAnnotationPresent(Transient.class))
+                .forEach(field -> {
+                    ColumnType columnType;
+
+                    if (field.isAnnotationPresent(Id.class)) {
+                        columnType = new ColumnId(field);
+                    } else {
+                        columnType = new ColumnField(field);
+                    }
+                    columnMap.put(columnType.getName(), columnType);
+                });
+
+        return columnMap;
     }
 
     public ColumnType getColumn(String name) {
@@ -43,7 +44,6 @@ public class ColumnTypes {
         return columnTypeMap.values()
                 .stream()
                 .filter(ColumnType::isId)
-                .filter(columnType -> !columnType.isTransient())
                 .map(columnType -> (ColumnId) columnType)
                 .collect(Collectors.toList());
     }
@@ -52,7 +52,11 @@ public class ColumnTypes {
         return columnTypeMap.values()
                 .stream()
                 .filter(columnType -> !columnType.isId())
-                .filter(columnType -> !columnType.isTransient()).collect(Collectors.toList());
+                .collect(Collectors.toList());
+    }
+
+    public List<ColumnValue> getColumnValues(Object object) {
+        return null;
     }
 
 }

@@ -1,9 +1,6 @@
 package persistence.sql.ddl;
 
-import persistence.sql.mapper.ColumnId;
-import persistence.sql.mapper.ColumnType;
-import persistence.sql.mapper.ColumnTypes;
-import persistence.sql.mapper.TableType;
+import persistence.sql.mapper.*;
 
 import java.util.List;
 
@@ -11,9 +8,9 @@ public class EntityMetaData {
     final private TableType tableType;
     final private ColumnTypes columnTypes;
 
-    public EntityMetaData(final Object entity) {
-        this.tableType = new TableType(entity);
-        this.columnTypes = new ColumnTypes(entity);
+    public EntityMetaData(final Class<?> clazz) {
+        this.tableType = new TableType(clazz);
+        this.columnTypes = new ColumnTypes(clazz);
     }
 
     public List<ColumnId> getIdColumns() {
@@ -25,6 +22,9 @@ public class EntityMetaData {
         return columnTypes.getFieldColumns();
     }
 
+    public List<ColumnValue> getColumnValues(Object object) {
+        return columnTypes.getColumnValues(object);
+    }
 
     public String getTableName() {
         return this.tableType.getName();

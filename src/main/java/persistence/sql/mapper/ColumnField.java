@@ -21,16 +21,15 @@ public class ColumnField implements ColumnType {
 
     private final String dataType;
     private final Class<?> type;
-    private final ColumnValue columnValue;
+    private ColumnValue columnValue;
 
-    public ColumnField(final Object entity, final Field field) {
+    public ColumnField(final Field field) {
         this.type = field.getType();
         this.name = this.parseName(field);
         this.nullable = this.parsNullable(field);
         this.isTransient = this.parseTransient(field);
         this.length = this.parseLength(field);
         this.dataType = this.parseDataType(field);
-        this.columnValue = this.parseValue(entity, field);
     }
 
     private ColumnValue parseValue(final Object entity, final Field field) {
@@ -111,6 +110,11 @@ public class ColumnField implements ColumnType {
     @Override
     public Class<?> getType() {
         return type;
+    }
+
+    @Override
+    public Object getColumnValue(Object object) {
+        return null;
     }
 
 }

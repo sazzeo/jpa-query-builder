@@ -10,10 +10,9 @@ public class TableType {
 
     private final Class<?> entity;
 
-    public TableType(final Object entity) {
-        Class<?> entityClass = entity.getClass();
-        validateEntityClass(entityClass);
-        this.entity = entityClass;
+    public TableType(Class<?> entity) {
+        validateEntityClass(entity);
+        this.entity = entity;
     }
 
     public void validateEntityClass(final Class<?> entity) {

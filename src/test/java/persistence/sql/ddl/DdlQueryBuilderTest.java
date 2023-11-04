@@ -7,7 +7,7 @@ import persistence.sql.ddl.query.DdlQueryBuilder;
 
 class DdlQueryBuilderTest {
     final DdlQueryBuilder ddlQueryBuilder = DdlQueryBuilder.getInstance();
-    final EntityMetaData entityMetaData = new EntityMetaData(new Person());
+    final EntityMetaData entityMetaData = new EntityMetaData(Person.class);
 
 
     @Test

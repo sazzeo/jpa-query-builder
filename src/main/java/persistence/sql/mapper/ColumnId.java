@@ -14,9 +14,9 @@ public class ColumnId implements ColumnType {
     private final GenerationType generationType;
 
 
-    public ColumnId(final Object entity, final Field field) {
+    public ColumnId(final Field field) {
         validateIdColumn(field);
-        this.delegate = new ColumnField(entity, field);
+        this.delegate = new ColumnField(field);
         this.generationType = paresGenerationType(field);
     }
 
@@ -69,6 +69,11 @@ public class ColumnId implements ColumnType {
     @Override
     public Class<?> getType() {
         return delegate.getType();
+    }
+
+    @Override
+    public Object getColumnValue(Object object) {
+        return null;
     }
 
     public GenerationType getGenerationType() {

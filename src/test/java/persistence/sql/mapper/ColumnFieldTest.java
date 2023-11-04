@@ -19,7 +19,7 @@ class ColumnFieldTest {
     @DisplayName("Column name값이 있는 경우 테스트")
     void nameTest() throws Exception {
         Field name = personClass.getDeclaredField("name");
-        ColumnType columnField = new ColumnField(person, name);
+        ColumnType columnField = new ColumnField(name);
         assertThat(columnField.getName()).isEqualTo("nick_name");
     }
 
@@ -27,7 +27,7 @@ class ColumnFieldTest {
     @DisplayName("Column name값이 없는 경우 테스트")
     void noNameTest() throws Exception {
         Field email = personClass.getDeclaredField("email");
-        ColumnType columnField = new ColumnField(person, email);
+        ColumnType columnField = new ColumnField(email);
         assertThat(columnField.getName()).isEqualTo("email");
     }
 
@@ -35,7 +35,7 @@ class ColumnFieldTest {
     @DisplayName("isId 테스트")
     void isIdTest() throws Exception {
         Field email = personClass.getDeclaredField("email");
-        ColumnType columnField = new ColumnField(person, email);
+        ColumnType columnField = new ColumnField(email);
         assertThat(columnField.isId()).isFalse();
     }
 
@@ -43,7 +43,7 @@ class ColumnFieldTest {
     @DisplayName("@Transient 붙어있을때 테스트")
     void transientTest() throws Exception {
         Field index = personClass.getDeclaredField("index");
-        ColumnType columnField = new ColumnField(person, index);
+        ColumnType columnField = new ColumnField(index);
         assertThat(columnField.isTransient()).isTrue();
     }
 
@@ -51,7 +51,7 @@ class ColumnFieldTest {
     @DisplayName("@Transient 없을때 테스트")
     void noTransientTest() throws Exception {
         Field email = personClass.getDeclaredField("email");
-        ColumnType columnField = new ColumnField(person, email);
+        ColumnType columnField = new ColumnField(email);
         assertThat(columnField.isTransient()).isFalse();
     }
 
@@ -61,8 +61,8 @@ class ColumnFieldTest {
         Field email = personClass.getDeclaredField("email");
         Field name = personClass.getDeclaredField("name");
 
-        ColumnType emailField = new ColumnField(person, email);
-        ColumnType nameField = new ColumnField(person, name);
+        ColumnType emailField = new ColumnField(email);
+        ColumnType nameField = new ColumnField(name);
 
         assertAll(
                 () -> assertThat(emailField.isNullable()).isFalse(),
@@ -76,8 +76,8 @@ class ColumnFieldTest {
         Field email = personClass.getDeclaredField("email");
         Field name = personClass.getDeclaredField("name");
 
-        ColumnType emailField = new ColumnField(person, email);
-        ColumnType nameField = new ColumnField(person, name);
+        ColumnType emailField = new ColumnField(email);
+        ColumnType nameField = new ColumnField(name);
 
         assertAll(
                 () -> assertThat(emailField.getLength()).isEqualTo("(255)"),
@@ -91,8 +91,8 @@ class ColumnFieldTest {
         Field email = personClass.getDeclaredField("email");
         Field age = personClass.getDeclaredField("age");
 
-        ColumnType emailField = new ColumnField(person, email);
-        ColumnType ageField = new ColumnField(person, age);
+        ColumnType emailField = new ColumnField(email);
+        ColumnType ageField = new ColumnField(age);
 
         assertAll(
                 () -> assertThat(emailField.getDataType()).isEqualTo("VARCHAR"),
@@ -113,9 +113,9 @@ class ColumnFieldTest {
         Field name = personClass.getDeclaredField("name");
 
 
-        ColumnType emailField = new ColumnField(person, email);
-        ColumnType ageField = new ColumnField(person, age);
-        ColumnType nameField = new ColumnField(person, name);
+        ColumnType emailField = new ColumnField(email);
+        ColumnType ageField = new ColumnField(age);
+        ColumnType nameField = new ColumnField(name);
 
 
         //then

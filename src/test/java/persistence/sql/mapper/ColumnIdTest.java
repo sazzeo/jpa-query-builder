@@ -21,7 +21,7 @@ class ColumnIdTest {
     @DisplayName("Column name값이 있는 경우 테스트")
     void nameTest() throws Exception {
         Field id = personClass.getDeclaredField("id");
-        ColumnType columnId = new ColumnId(person, id);
+        ColumnType columnId = new ColumnId(id);
         Assertions.assertThat(columnId.getName()).isEqualTo("id");
     }
 
@@ -29,7 +29,7 @@ class ColumnIdTest {
     @DisplayName("pk column 판단")
     void noNameTest() throws Exception {
         Field id = personClass.getDeclaredField("id");
-        ColumnType columnId = new ColumnId(person, id);
+        ColumnType columnId = new ColumnId(id);
         Assertions.assertThat(columnId.isId()).isTrue();
     }
 
@@ -38,7 +38,7 @@ class ColumnIdTest {
     void invalidIdColumnTest() throws Exception {
         Field name = personClass.getDeclaredField("name");
         assertThrows(InvalidIdColumnException.class, () -> {
-            new ColumnId(person, name);
+            new ColumnId(name);
         });
     }
 
@@ -47,7 +47,7 @@ class ColumnIdTest {
     void getGenerationType() throws Exception {
         Field id = personClass.getDeclaredField("id");
 
-        ColumnId columnId = new ColumnId(person, id);
+        ColumnId columnId = new ColumnId(id);
 
         assertThat(columnId.getGenerationType()).isEqualTo(GenerationType.IDENTITY);
     }
@@ -58,7 +58,7 @@ class ColumnIdTest {
     void valueTest() throws Exception {
         Field idField = personClass.getDeclaredField("id");
         person.setId(100L);
-        ColumnId columnId = new ColumnId(person, idField);
+        ColumnId columnId = new ColumnId(idField);
 
         assertThat(columnId.getValue()).isEqualTo("100");
 
@@ -69,7 +69,7 @@ class ColumnIdTest {
     void getTypeTest() throws Exception{
         Field id = personClass.getDeclaredField("id");
         person.setId(100L);
-        ColumnId columnId = new ColumnId(person, id);
+        ColumnId columnId = new ColumnId(id);
 
         assertThat(columnId.getType()).isEqualTo(Long.class);
     }

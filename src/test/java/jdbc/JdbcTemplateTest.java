@@ -24,7 +24,7 @@ class JdbcTemplateTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        entityMetaData = new EntityMetaData(person);
+        entityMetaData = new EntityMetaData(Person.class);
 
         final DatabaseServer server = new H2();
         server.start();

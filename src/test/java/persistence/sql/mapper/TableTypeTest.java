@@ -10,7 +10,7 @@ class TableTypeTest {
     @Test
     @DisplayName("테이블 이름을 가져온다.")
     void getNameTest() {
-        TableType tableType = new TableType(new Person());
+        TableType tableType = new TableType(Person.class);
         String name = tableType.getName();
         Assertions.assertThat(name).isEqualToIgnoringCase("users");
     }

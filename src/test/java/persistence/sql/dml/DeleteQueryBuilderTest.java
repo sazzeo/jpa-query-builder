@@ -20,7 +20,7 @@ class DeleteQueryBuilderTest {
     @BeforeEach
     void setUp() {
         person.setId(id);
-        entityMetaData = new EntityMetaData(person);
+        entityMetaData = new EntityMetaData(Person.class);
     }
 
     @Test
