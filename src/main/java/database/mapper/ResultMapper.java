@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ResultMapper<T> implements RowMapper<T> {
 
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
     public ResultMapper(final Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -22,25 +22,16 @@ public class ResultMapper<T> implements RowMapper<T> {
             T entity = entityClass.getConstructor().newInstance();
             EntityAnnotationUtils.getNonTransientData(entityClass.getDeclaredFields()).forEach(field -> {
                 try {
-                    Class<?> type = field.getType();
                     field.setAccessible(true);
                     String columnName = EntityAnnotationUtils.parseColumnName(field);
-                    if (type.equals(String.class)) {
-                        String string = resultSet.getString(columnName);
-                        field.set(entity, string);
-                    }
-                    if (type.equals(Integer.class)) {
-                        field.set(entity, resultSet.getInt(columnName));
-                    }
-                    if (type.equals(Long.class)) {
-                        field.set(entity, resultSet.getLong(columnName));
-                    }
+                    Object object = resultSet.getObject(columnName);
+                    field.set(entity, object);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });
-
             return entity;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
