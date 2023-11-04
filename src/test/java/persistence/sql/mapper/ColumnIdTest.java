@@ -56,9 +56,9 @@ class ColumnIdTest {
     @Test
     @DisplayName("value 값 뽑기 테스트")
     void valueTest() throws Exception {
-        Field id = personClass.getDeclaredField("id");
+        Field idField = personClass.getDeclaredField("id");
         person.setId(100L);
-        ColumnId columnId = new ColumnId(person, id);
+        ColumnId columnId = new ColumnId(person, idField);
 
         assertThat(columnId.getValue()).isEqualTo("100");
 
